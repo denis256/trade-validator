@@ -28,22 +28,22 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Trade {
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date tradeDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date valueDate;
+
     private String customer;
 
     private String ccyPair;
 
     private String type;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date tradeDate;
-
     private String style;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date excerciseStartDate;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date valueDate;
 
     public Date getValueDate() {
         return valueDate;
