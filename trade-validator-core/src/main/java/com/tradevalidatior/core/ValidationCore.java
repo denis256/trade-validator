@@ -1,7 +1,6 @@
 package com.tradevalidatior.core;
 
 import com.tradevalidatior.validator.TradeValidator;
-import com.tradevalidatior.validator.ValidationConfigurations;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 public class ValidationCore {
 
     private Collection<TradeValidator> tradeValidators;
-    private ValidationConfigurations validationConfigurations;
 
     public ValidationCore() {
         tradeValidators = new ArrayList<>();
@@ -30,18 +28,9 @@ public class ValidationCore {
     public List<ValidationResult> validateTrade(Trade trade) {
 
         return tradeValidators.parallelStream()
-                .map( validator ->  validator.validate(trade, validationConfigurations))
+                .map( validator ->  validator.validate(trade))
                 .filter(validationResult -> validationResult.hasErrors())
                 .collect(Collectors.toList());
-    }
-
-    public ValidationConfigurations validationConfigurations() {
-        return this.validationConfigurations;
-    }
-
-    public ValidationCore withConfiguraitons(ValidationConfigurations validationConfigurations) {
-        this.validationConfigurations = validationConfigurations;
-        return this;
     }
 
     public ValidationCore withValidators(Collection<TradeValidator> tradeValidators) {
