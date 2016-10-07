@@ -23,12 +23,14 @@ public class TradeDateValueValidator implements TradeValidator{
         ValidationResult validationResult = newValidationResult();
 
         if (trade.getValueDate() == null) {
+            LOG.warn("Value date is missing for trade {}", trade);
             validationResult.withError(
                     validationError().field("valueDate").message("valueDate is missing")
             );
         }
 
         if (trade.getTradeDate() == null) {
+            LOG.warn("Trade date is missing for trade {}", trade);
             validationResult.withError(
                     validationError().field("tradeDate").message("tradeDate is missing")
             );
