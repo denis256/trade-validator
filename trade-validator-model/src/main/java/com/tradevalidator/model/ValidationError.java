@@ -8,7 +8,9 @@ public class ValidationError {
     private String field;
     private String message;
 
-    public ValidationError() {}
+    public static ValidationError validationError() {
+        return new ValidationError();
+    }
 
     public String field() {
         return field;
