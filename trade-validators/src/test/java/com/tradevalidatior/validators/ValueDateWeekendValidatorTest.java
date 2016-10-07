@@ -58,6 +58,9 @@ public class ValueDateWeekendValidatorTest {
 
         ValidationResult result = valueDateWeekendValidator.validate(trade);
 
+        assertThat(result.hasErrors(), is(true));
+        assertThat(result.errors().size(), is(1));
+
         ValidationError firstError = result.errors().stream().findFirst().get();
         assertThat(firstError.field(), is("valueDate"));
         assertThat(firstError.message(), is("valueDate is missing"));
