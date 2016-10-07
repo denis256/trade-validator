@@ -8,10 +8,10 @@ import java.util.Collection;
  */
 public class ValidationResult {
 
-    private Collection<ValidationError> errors;
+    private Collection<ValidationError> errors = new ArrayList<>();
 
-    public ValidationResult() {
-        this.errors = new ArrayList<>();
+    public static ValidationResult newValidationResult() {
+        return new ValidationResult();
     }
 
     public boolean hasErrors() {
