@@ -158,6 +158,32 @@ public class CurrencyValidatorTest {
 
     }
 
+    @Test
+    public void test_CurrencyValidator_No_value_date() throws ParseException {
+        trade.setCcyPair("EURUSD");
+        trade.setValueDate(null);
+
+        CurrencyHolidayService mockedCurrencyHolidayService = Mockito.mock(CurrencyHolidayService.class);
+
+        doReturn(Optional.of(HOLIDAYS)).when(mockedCurrencyHolidayService).fetchHolidays(Currency.getInstance("EUR"));
+        doReturn(Optional.of(HOLIDAYS)).when(mockedCurrencyHolidayService).fetchHolidays(Currency.getInstance("USD"));
+
+        InOrder order = inOrder(mockedCurrencyHolidayService);
+
+        currencyValidator = new CurrencyValidator(mockedCurrencyHolidayService);
+
+        ValidationResult result = currencyValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.errors().size(), is(1));
+
+        ValidationError firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("valueDate"));
+        assertThat(firstError.message(), is("valueDate is missing"));
+
+        order.verifyNoMoreInteractions();
+    }
+
 
 
 
