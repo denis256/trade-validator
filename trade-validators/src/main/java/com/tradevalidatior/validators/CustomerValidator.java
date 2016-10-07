@@ -4,6 +4,7 @@ import com.tradevalidatior.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,12 @@ public class CustomerValidator implements TradeValidator {
 
         ValidationResult validationResult = newValidationResult();
 
-        if (validCustomers.contains(trade.getCustomer())) {
+        if (StringUtils.isBlank(trade.getCustomer())) {
+            validationResult.withError(validationError().field("customer").message("Customer blank"));
+            return validationResult;
+        }
+
+        if (!validCustomers.contains(trade.getCustomer())) {
             validationResult.withError(validationError().field("customer").message("Customer is not in approved list"));
         }
 
