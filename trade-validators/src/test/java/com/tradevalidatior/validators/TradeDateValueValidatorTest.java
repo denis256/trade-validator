@@ -12,12 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.stream.Collectors;
 
 import static com.tradevalidator.model.Trade.newTrade;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class TradeDateValueValidatorTest {
 
