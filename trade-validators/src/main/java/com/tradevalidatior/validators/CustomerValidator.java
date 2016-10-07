@@ -12,6 +12,9 @@ import java.util.Set;
 import static com.tradevalidator.model.ValidationResult.newValidationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
 
+/**
+ * Validator for business rule : "the counterparty is one of the supported ones"
+ */
 public class CustomerValidator implements TradeValidator {
 
     private Set<String> validCustomers = new HashSet<>();
