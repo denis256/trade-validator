@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Currency and currency - holiday validator
+ * Currency pair validator, currency - holiday checker
  */
 public class CurrencyValidator implements TradeValidator {
 
@@ -49,6 +49,7 @@ public class CurrencyValidator implements TradeValidator {
             validationResult.withError(ValidationError.validationError().field("valueDate").message("valueDate is missing"));
         }
 
+        // extract currency pairs
         String currency1Str = ccyPair.substring(0, 3);
         String currency2Str = ccyPair.substring(3);
 
@@ -71,7 +72,14 @@ public class CurrencyValidator implements TradeValidator {
 
         return validationResult;
     }
+
     boolean isDateHolidayCurrency(Date date, Currency currency) {
+
+        if (currencyHolidayService == null) {
+            LOG.warn("Currency holiday service not set");
+            return false;
+        }
+
         Optional<Set<Date>> dates = currencyHolidayService.fetchHolidays(currency);
         if (!dates.isPresent()) {
             LOG.warn("Empty holidays dates response for query {}", currency);
