@@ -10,7 +10,7 @@ import static com.tradevalidator.model.ValidationResult.newValidationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
 
 /**
- * Validator which checks business rule: "value date cannot be before trade date"
+ * Validator which checks business rule:"value date cannot be before trade date"
  */
 public class TradeDateValueValidator implements TradeValidator{
 
