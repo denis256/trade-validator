@@ -45,6 +45,10 @@ public class Trade {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date excerciseStartDate;
 
+    public static Trade newTrade() {
+        return new Trade();
+    }
+
     public Date getValueDate() {
         return valueDate;
     }
