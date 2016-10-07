@@ -111,34 +111,54 @@ public class CurrencyValidatorTest {
         order.verifyNoMoreInteractions();
     }
 
-//    @Test
-//    public void test_CustomerValidator_Wrong_customer() throws ParseException {
-//        trade.setCustomer("TOMATO");
-//
-//        ValidationResult result = customerValidator.validate(trade);
-//
-//        assertThat(result, is(not(nullValue())));
-//        assertThat(result.hasErrors(), is(true));
-//        assertThat(result.errors().size(), is(1));
-//
-//        ValidationError firstError = result.errors().stream().findFirst().get();
-//        assertThat(firstError.field(), is("customer"));
-//        assertThat(firstError.message(), is("Customer is not in approved list"));
-//    }
-//
-//    @Test
-//    public void test_CustomerValidator_Customer_missing() throws ParseException {
-//
-//        ValidationResult result = customerValidator.validate(trade);
-//
-//        assertThat(result, is(not(nullValue())));
-//        assertThat(result.hasErrors(), is(true));
-//        assertThat(result.errors().size(), is(1));
-//
-//        ValidationError firstError = result.errors().stream().findFirst().get();
-//        assertThat(firstError.field(), is("customer"));
-//        assertThat(firstError.message(), is("Customer blank"));
-//    }
+
+    @Test
+    public void test_CurrencyValidator_Invalid_currency_codes() throws ParseException {
+        trade.setCcyPair("ABC123");
+
+        CurrencyHolidayService mockedCurrencyHolidayService = Mockito.mock(CurrencyHolidayService.class);
+
+        InOrder order = inOrder(mockedCurrencyHolidayService);
+
+        currencyValidator = new CurrencyValidator(mockedCurrencyHolidayService);
+
+        ValidationResult result = currencyValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.errors().size(), is(2));
+
+        assertThat(result.errors().stream()
+                .map(ValidationError::message)
+                .collect(Collectors.toList()), contains("Currency 1 is not valid", "Currency 2 is not valid")
+        );
+
+        assertThat(result.errors().stream()
+                .map(ValidationError::field)
+                .collect(Collectors.toList()), contains("ccyPair", "ccyPair")
+        );
+        order.verifyNoMoreInteractions();
+
+
+        trade.setCcyPair("Kappa123");
+        result = currencyValidator.validate(trade);
+        assertThat(result.errors().size(), is(1));
+
+        ValidationError firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("ccyPair"));
+        assertThat(firstError.message(), is("ccyPair length should be 6"));
+
+        trade.setCcyPair("");
+        result = currencyValidator.validate(trade);
+        assertThat(result.errors().size(), is(1));
+
+        firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("ccyPair"));
+        assertThat(firstError.message(), is("ccyPair is blank"));
+
+
+    }
+
+
 
 
 }

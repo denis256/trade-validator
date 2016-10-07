@@ -38,7 +38,7 @@ public class CurrencyValidator implements TradeValidator {
             return validationResult.withError(new ValidationError().field("ccyPair").message("ccyPair is blank"));
         }
 
-        if (StringUtils.length(ccyPair) != 6) {
+        if (StringUtils.length(ccyPair) != 6) { // ISO standard says that currency code have 3 chars, we have a pair, so should be 6...
             return validationResult.withError(new ValidationError().field("ccyPair").message("ccyPair length should be 6"));
         }
 
