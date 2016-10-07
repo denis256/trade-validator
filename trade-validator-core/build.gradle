@@ -1,0 +1,7 @@
+dependencies {
+
+    compile project(":trade-validator-model")
+    compile project(":trade-validator-api")
+
+
+}
