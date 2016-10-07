@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import static com.tradevalidator.model.Trade.newTrade;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
@@ -33,7 +34,7 @@ public class CustomerValidatorTest {
         ValidationResult result = customerValidator.validate(trade);
 
         assertThat(result, is(not(nullValue())));
-        assertThat(result.hasErrors(), is(false));
+        assertThat(result.errors(), is(empty()));
     }
 
     @Test

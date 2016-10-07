@@ -34,7 +34,7 @@ public class ValueDateWeekendValidatorTest {
         ValidationResult result = valueDateWeekendValidator.validate(trade);
 
         assertThat(result, is(not(nullValue())));
-        assertThat(result.hasErrors(), is(false));
+        assertThat(result.errors(), is(empty()));
     }
 
     @Test

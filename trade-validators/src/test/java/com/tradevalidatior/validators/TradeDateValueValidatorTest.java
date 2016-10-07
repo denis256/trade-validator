@@ -35,7 +35,7 @@ public class TradeDateValueValidatorTest {
         ValidationResult result = tradeDateValueValidator.validate(trade);
 
         assertThat(result, is(not(nullValue())));
-        assertThat(result.hasErrors(), is(false));
+        assertThat(result.errors(), is(empty()));
     }
 
     @Test
