@@ -1,7 +1,6 @@
 package com.tradevalidatior.validators;
 
 import com.tradevalidatior.validator.TradeValidator;
-import com.tradevalidatior.validator.ValidationConfigurations;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
@@ -14,7 +13,7 @@ public class CustomerValidator implements TradeValidator {
     private Collection<String> validCustomers = new ArrayList<>();
 
     @Override
-    public ValidationResult validate(Trade trade, ValidationConfigurations configurations) {
+    public ValidationResult validate(Trade trade) {
 
         ValidationResult validationResult = new ValidationResult();
 
