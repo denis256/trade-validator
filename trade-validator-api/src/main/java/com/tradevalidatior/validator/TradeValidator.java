@@ -8,5 +8,5 @@ import com.tradevalidator.model.ValidationResult;
  */
 public interface TradeValidator {
 
-    ValidationResult validate(Trade trade, ValidationConfigurations configurations);
+    ValidationResult validate(Trade trade);
 }

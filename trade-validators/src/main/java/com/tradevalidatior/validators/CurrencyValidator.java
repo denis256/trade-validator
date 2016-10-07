@@ -1,20 +1,17 @@
 package com.tradevalidatior.validators;
 
 import com.tradevalidatior.validator.TradeValidator;
-import com.tradevalidatior.validator.ValidationConfigurations;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Currency;
 
 public class CurrencyValidator implements TradeValidator {
 
     @Override
-    public ValidationResult validate(Trade trade, ValidationConfigurations configurations) {
+    public ValidationResult validate(Trade trade) {
 
         ValidationResult validationResult = new ValidationResult();
 
