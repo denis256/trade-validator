@@ -28,7 +28,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * contract terms on the current date with the delivery and payment at a specified future date.
  */
 @Component
-public class SportForwardValidator  implements TradeValidator {
+public class SpotForwardValidator implements TradeValidator {
 
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -36,7 +36,7 @@ public class SportForwardValidator  implements TradeValidator {
     private Set<String> forwardTypes = new HashSet<>();
     private Date todayDate;
 
-    private SportForwardValidator() {
+    public SpotForwardValidator() {
         spotTypes.add("Spot");
         forwardTypes.add("Forward");
 
@@ -58,11 +58,11 @@ public class SportForwardValidator  implements TradeValidator {
             return validationResult;
         }
 
-        if (spotTypes.contains(trade.getType())) {
+        if (spotTypes.contains(trade.getType())) { // lower case test
             return validateSpotTrade(trade);
         }
 
-        if (forwardTypes.contains(trade.getType())) {
+        if (forwardTypes.contains(trade.getType())) { // lower case test
             return validateForwardTrade(trade);
         }
 
@@ -93,5 +93,29 @@ public class SportForwardValidator  implements TradeValidator {
         }
 
         return validationResult;
+    }
+
+    public Set<String> getSpotTypes() {
+        return spotTypes;
+    }
+
+    public void setSpotTypes(Set<String> spotTypes) {
+        this.spotTypes = spotTypes;
+    }
+
+    public Set<String> getForwardTypes() {
+        return forwardTypes;
+    }
+
+    public void setForwardTypes(Set<String> forwardTypes) {
+        this.forwardTypes = forwardTypes;
+    }
+
+    public Date getTodayDate() {
+        return todayDate;
+    }
+
+    public void setTodayDate(Date todayDate) {
+        this.todayDate = todayDate;
     }
 }
