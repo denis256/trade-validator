@@ -34,4 +34,10 @@ public class ValidationResult {
                 "errors=" + errors +
                 '}';
     }
+
+    public Collection<ValidationError> getErrors() {
+        return errors;
+    }
+
+
 }

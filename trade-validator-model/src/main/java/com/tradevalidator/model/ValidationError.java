@@ -56,4 +56,12 @@ public class ValidationError {
                 ", message='" + message + '\'' +
                 '}';
     }
+
+    public String getField() {
+        return field;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

@@ -9,9 +9,11 @@ import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Optional;
@@ -36,6 +38,15 @@ public class TradeValidatorAppApplication implements ServletContextInitializer {
 	public CurrencyHolidayService currencyHolidayService() {
 
 		return currency -> Optional.empty();
+	}
+
+	@Bean
+	public Jackson2ObjectMapperBuilder jacksonBuilder() {
+		return new Jackson2ObjectMapperBuilder()
+				.dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
+				.failOnEmptyBeans(false)
+				;
+
 	}
 
 }
