@@ -1,5 +1,7 @@
 package com.tradevalidator.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,7 +14,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class TradeValidationResult {
 
     private Trade trade;
-
     private Map<String, Collection<String>> invalidFields = new ConcurrentHashMap<>();
 
     public static TradeValidationResult tradeValidationResult() {
@@ -43,6 +44,11 @@ public class TradeValidationResult {
 
     public void setInvalidFields(Map<String, Collection<String>> invalidFields) {
         this.invalidFields = invalidFields;
+    }
+
+    @JsonGetter("haveErrors")
+    public boolean haveErrors() {
+        return !invalidFields.isEmpty();
     }
 
     public TradeValidationResult trade(Trade trade) {
