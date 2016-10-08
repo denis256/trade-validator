@@ -51,6 +51,17 @@ public class Trade {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date premiumDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date deliveryDate;
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
     public Date getExpiryDate() {
         return expiryDate;
     }
