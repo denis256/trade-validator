@@ -1,4 +1,5 @@
 dependencies {
+    compile 'ch.qos.logback:logback-classic:1.1.6'
 
     compile project(":trade-validator-model")
     compile project(":trade-validator-api")
