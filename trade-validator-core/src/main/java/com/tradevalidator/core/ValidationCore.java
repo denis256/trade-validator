@@ -32,8 +32,8 @@ public class ValidationCore {
 
     /**
      * Validate trade against loaded validators
-     * @param trade
-     * @return
+     * @param trade Trade instance
+     * @return Trade validation errors
      */
     public TradeValidationResult validate(Trade trade) {
 
@@ -53,8 +53,8 @@ public class ValidationCore {
 
     /**
      * Bulk validation of trade collection
-     * @param trades
-     * @return
+     * @param trades Collection of trades
+     * @return Trade results collection
      */
     public Collection<TradeValidationResult> bulkValidate(Collection<Trade> trades) {
 
