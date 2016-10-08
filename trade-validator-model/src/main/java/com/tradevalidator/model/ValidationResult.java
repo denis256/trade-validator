@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Result of one validation evaludation
+ * Result of one validation evaluation
  */
 public class ValidationResult {
 

@@ -161,6 +161,7 @@ public class Trade {
         sb.append(", excerciseStartDate=").append(excerciseStartDate);
         sb.append(", expiryDate=").append(expiryDate);
         sb.append(", premiumDate=").append(premiumDate);
+        sb.append(", deliveryDate=").append(deliveryDate);
         sb.append(", legalEntity='").append(legalEntity).append('\'');
         sb.append('}');
         return sb.toString();
@@ -183,6 +184,7 @@ public class Trade {
             return false;
         if (expiryDate != null ? !expiryDate.equals(trade.expiryDate) : trade.expiryDate != null) return false;
         if (premiumDate != null ? !premiumDate.equals(trade.premiumDate) : trade.premiumDate != null) return false;
+        if (deliveryDate != null ? !deliveryDate.equals(trade.deliveryDate) : trade.deliveryDate != null) return false;
         return legalEntity != null ? legalEntity.equals(trade.legalEntity) : trade.legalEntity == null;
 
     }
@@ -198,6 +200,7 @@ public class Trade {
         result = 31 * result + (excerciseStartDate != null ? excerciseStartDate.hashCode() : 0);
         result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
         result = 31 * result + (premiumDate != null ? premiumDate.hashCode() : 0);
+        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
         result = 31 * result + (legalEntity != null ? legalEntity.hashCode() : 0);
         return result;
     }
