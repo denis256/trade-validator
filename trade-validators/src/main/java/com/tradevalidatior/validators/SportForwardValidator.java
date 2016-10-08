@@ -5,7 +5,6 @@ import com.tradevalidatior.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,11 +64,11 @@ public class SportForwardValidator  implements TradeValidator {
             return validateForwardTrade(trade);
         }
 
-        return ValidationResult.newValidationResult();
+        return ValidationResult.validationResult();
     }
 
     private ValidationResult validateSpotTrade(Trade trade) {
-        ValidationResult validationResult = ValidationResult.newValidationResult();
+        ValidationResult validationResult = ValidationResult.validationResult();
 
         LocalDate tradeLocalDate = trade.getValueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate todayDateLocalDate = todayDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -82,7 +81,7 @@ public class SportForwardValidator  implements TradeValidator {
     }
 
     private ValidationResult validateForwardTrade(Trade trade) {
-        ValidationResult validationResult = ValidationResult.newValidationResult();
+        ValidationResult validationResult = ValidationResult.validationResult();
 
         LocalDate tradeLocalDate = trade.getValueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate todayDateLocalDate = todayDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

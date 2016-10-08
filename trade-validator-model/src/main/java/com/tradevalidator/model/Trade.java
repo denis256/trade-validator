@@ -45,6 +45,38 @@ public class Trade {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date excerciseStartDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date expiryDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date premiumDate;
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public Date getPremiumDate() {
+        return premiumDate;
+    }
+
+    public void setPremiumDate(Date premiumDate) {
+        this.premiumDate = premiumDate;
+    }
+
+    private String legalEntity;
+
+    public String getLegalEntity() {
+        return legalEntity;
+    }
+
+    public void setLegalEntity(String legalEntity) {
+        this.legalEntity = legalEntity;
+    }
+
     public static Trade newTrade() {
         return new Trade();
     }
@@ -105,17 +137,22 @@ public class Trade {
         this.excerciseStartDate = excerciseStartDate;
     }
 
+
     @Override
     public String toString() {
-        return "Trade{" +
-                "customer='" + customer + '\'' +
-                ", ccyPair='" + ccyPair + '\'' +
-                ", type='" + type + '\'' +
-                ", tradeDate=" + tradeDate +
-                ", style='" + style + '\'' +
-                ", excerciseStartDate=" + excerciseStartDate +
-                ", valueDate=" + valueDate +
-                '}';
+        final StringBuffer sb = new StringBuffer("Trade{");
+        sb.append("tradeDate=").append(tradeDate);
+        sb.append(", valueDate=").append(valueDate);
+        sb.append(", customer='").append(customer).append('\'');
+        sb.append(", ccyPair='").append(ccyPair).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", style='").append(style).append('\'');
+        sb.append(", excerciseStartDate=").append(excerciseStartDate);
+        sb.append(", expiryDate=").append(expiryDate);
+        sb.append(", premiumDate=").append(premiumDate);
+        sb.append(", legalEntity='").append(legalEntity).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -125,26 +162,32 @@ public class Trade {
 
         Trade trade = (Trade) o;
 
+        if (tradeDate != null ? !tradeDate.equals(trade.tradeDate) : trade.tradeDate != null) return false;
+        if (valueDate != null ? !valueDate.equals(trade.valueDate) : trade.valueDate != null) return false;
         if (customer != null ? !customer.equals(trade.customer) : trade.customer != null) return false;
         if (ccyPair != null ? !ccyPair.equals(trade.ccyPair) : trade.ccyPair != null) return false;
         if (type != null ? !type.equals(trade.type) : trade.type != null) return false;
-        if (tradeDate != null ? !tradeDate.equals(trade.tradeDate) : trade.tradeDate != null) return false;
         if (style != null ? !style.equals(trade.style) : trade.style != null) return false;
         if (excerciseStartDate != null ? !excerciseStartDate.equals(trade.excerciseStartDate) : trade.excerciseStartDate != null)
             return false;
-        return valueDate != null ? valueDate.equals(trade.valueDate) : trade.valueDate == null;
+        if (expiryDate != null ? !expiryDate.equals(trade.expiryDate) : trade.expiryDate != null) return false;
+        if (premiumDate != null ? !premiumDate.equals(trade.premiumDate) : trade.premiumDate != null) return false;
+        return legalEntity != null ? legalEntity.equals(trade.legalEntity) : trade.legalEntity == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = customer != null ? customer.hashCode() : 0;
+        int result = tradeDate != null ? tradeDate.hashCode() : 0;
+        result = 31 * result + (valueDate != null ? valueDate.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
         result = 31 * result + (ccyPair != null ? ccyPair.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (tradeDate != null ? tradeDate.hashCode() : 0);
         result = 31 * result + (style != null ? style.hashCode() : 0);
         result = 31 * result + (excerciseStartDate != null ? excerciseStartDate.hashCode() : 0);
-        result = 31 * result + (valueDate != null ? valueDate.hashCode() : 0);
+        result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
+        result = 31 * result + (premiumDate != null ? premiumDate.hashCode() : 0);
+        result = 31 * result + (legalEntity != null ? legalEntity.hashCode() : 0);
         return result;
     }
 }

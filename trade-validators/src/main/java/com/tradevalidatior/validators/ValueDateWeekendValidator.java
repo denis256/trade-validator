@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.tradevalidator.model.ValidationError.validationError;
-import static com.tradevalidator.model.ValidationResult.newValidationResult;
+import static com.tradevalidator.model.ValidationResult.validationResult;
 
 /**
  *  Validator which checks business rule: value date cannot fall on weekend
@@ -27,7 +27,7 @@ public class ValueDateWeekendValidator implements TradeValidator{
     @Override
     public ValidationResult validate(Trade trade) {
 
-        ValidationResult validationResult = newValidationResult();
+        ValidationResult validationResult = validationResult();
 
         if (trade.getValueDate() == null) {
             validationResult.withError(

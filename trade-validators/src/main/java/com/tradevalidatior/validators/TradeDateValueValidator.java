@@ -6,7 +6,7 @@ import com.tradevalidator.model.ValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.tradevalidator.model.ValidationResult.newValidationResult;
+import static com.tradevalidator.model.ValidationResult.validationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
 
 /**
@@ -20,7 +20,7 @@ public class TradeDateValueValidator implements TradeValidator{
     @Override
     public ValidationResult validate(Trade trade) {
 
-        ValidationResult validationResult = newValidationResult();
+        ValidationResult validationResult = validationResult();
 
         if (trade.getValueDate() == null) {
             LOG.warn("Value date is missing for trade {}", trade);

@@ -2,13 +2,12 @@ package com.tradevalidatior.validators;
 
 import com.tradevalidatior.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
-import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.tradevalidator.model.ValidationResult.newValidationResult;
+import static com.tradevalidator.model.ValidationResult.validationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
 
 /**
@@ -34,7 +33,7 @@ public class OptionTypeValidator implements TradeValidator {
 
     @Override
     public ValidationResult validate(Trade trade) {
-        ValidationResult validationResult = newValidationResult();
+        ValidationResult validationResult = validationResult();
 
         if (optionType.contains(trade.getType())) {
             if (!europeanStyles.contains(trade.getStyle()) && !americanStyles.contains(trade.getStyle())) { //the style can be either American or European
@@ -56,6 +55,6 @@ public class OptionTypeValidator implements TradeValidator {
 
         }
 
-        return newValidationResult();
+        return validationResult();
     }
 }

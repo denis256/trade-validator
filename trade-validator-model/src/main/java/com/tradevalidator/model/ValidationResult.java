@@ -10,7 +10,7 @@ public class ValidationResult {
 
     private Collection<ValidationError> errors = new ArrayList<>();
 
-    public static ValidationResult newValidationResult() {
+    public static ValidationResult validationResult() {
         return new ValidationResult();
     }
 

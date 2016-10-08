@@ -7,7 +7,6 @@ import com.tradevalidator.model.ValidationResult;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.tradevalidator.model.ValidationResult.newValidationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
 
 
@@ -25,7 +24,7 @@ public class LegalEntityValidator implements TradeValidator {
     @Override
     public ValidationResult validate(Trade trade) {
 
-        ValidationResult validationResult = ValidationResult.newValidationResult();
+        ValidationResult validationResult = ValidationResult.validationResult();
 
         if(!legalEntities.contains(trade.getLegalEntity())) {
             validationResult.withError(validationError().field("legalEntity").message("Legal entity is invalid"));
