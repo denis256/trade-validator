@@ -1,3 +1,4 @@
+project.ext.springVersion = "4.3.3.RELEASE"
 subprojects {
 
     group = 'com.tradevalidator'
