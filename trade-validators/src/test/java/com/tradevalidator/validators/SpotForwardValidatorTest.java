@@ -42,5 +42,20 @@ public class SpotForwardValidatorTest {
         assertThat(result.errors(), is(empty()));
     }
 
+    @Test
+    public void test_Forward_postivie_path() {
+
+        Date validSpotValiDate = DateUtils.addDays(spotForwardValidator.getTodayDate(), 5);
+        trade.setValueDate(validSpotValiDate);
+        trade.setType("Forward");
+
+
+        ValidationResult result = spotForwardValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.errors(), is(empty()));
+
+    }
+
 
 }
