@@ -5,6 +5,7 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -58,11 +59,15 @@ public class SpotForwardValidator implements TradeValidator {
             return validationResult;
         }
 
-        if (spotTypes.contains(trade.getType())) { // lower case test
+        if (spotTypes.stream()
+                .filter( type -> StringUtils.equalsIgnoreCase(type, trade.getType()))
+                .findFirst().isPresent()) {
             return validateSpotTrade(trade);
         }
 
-        if (forwardTypes.contains(trade.getType())) { // lower case test
+        if (forwardTypes.stream()
+                .filter( type -> StringUtils.equalsIgnoreCase(type, trade.getType()))
+                .findFirst().isPresent())  {
             return validateForwardTrade(trade);
         }
 
