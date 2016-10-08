@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static com.tradevalidator.model.TradeValidationResult.tradeValidationResult;
 
@@ -34,12 +35,11 @@ public class ValidationCore {
      * @param trade
      * @return
      */
-    public TradeValidationResult validateTrade(Trade trade) {
+    public TradeValidationResult validate(Trade trade) {
 
         if (shutdown.get()) {
-            throw new ValidationCoreException("ValidationCore is shutting down");
+            throw new CoreShutdownException();
         }
-
 
         TradeValidationResult tradeValidationResult = tradeValidationResult().trade(trade);
 
@@ -49,6 +49,22 @@ public class ValidationCore {
                 .forEach(validationError -> validationError.errors().forEach(error -> tradeValidationResult.addInvalidField(error.field(), error.message())) ); // collect results
 
         return tradeValidationResult;
+    }
+
+    /**
+     * Bulk validation of trade collection
+     * @param trades
+     * @return
+     */
+    public Collection<TradeValidationResult> bulkValidate(Collection<Trade> trades) {
+
+        if (shutdown.get()) {
+            throw new CoreShutdownException();
+        }
+
+        return trades.parallelStream()
+                .map(this::validate)
+                .collect(Collectors.toList());
     }
 
     @Autowired
