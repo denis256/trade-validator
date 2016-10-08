@@ -8,23 +8,18 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Stream;
 
 import static com.tradevalidator.model.Trade.newTrade;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 public class SpotForwardValidatorTest {
 
     private Trade trade;
     private SpotForwardValidator spotForwardValidator = new SpotForwardValidator();
-    private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-
 
     @Before
     public void before() {
