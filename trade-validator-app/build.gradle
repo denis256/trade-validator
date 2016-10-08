@@ -23,10 +23,17 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven { url 'http://maven.restlet.org' }
 }
 
 
 dependencies {
+
+	compile project(":trade-validator-core")
+	compile project(":trade-validators")
+
+	compile 'org.jminix:jminix:1.2.0'
+
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-actuator-docs')
 	compile('org.springframework.boot:spring-boot-starter-remote-shell')
