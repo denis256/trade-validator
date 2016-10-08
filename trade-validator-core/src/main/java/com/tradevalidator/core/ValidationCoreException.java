@@ -1,4 +1,4 @@
-package com.tradevalidatior.core;
+package com.tradevalidator.core;
 
 /**
  * Exception which may appear during validation evaluations

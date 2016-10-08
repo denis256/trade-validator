@@ -1,9 +1,10 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 /**
  * Validator for business rule : "the counterparty is one of the supported ones"
  */
+@Component
 public class CustomerValidator implements TradeValidator {
 
     private Set<String> validCustomers = new HashSet<>();

@@ -1,8 +1,9 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 /**
  * Only one legal entity is used: CS Zurich
  */
+@Component
 public class LegalEntityValidator implements TradeValidator {
 
     private Set<String> legalEntities = new HashSet<>();

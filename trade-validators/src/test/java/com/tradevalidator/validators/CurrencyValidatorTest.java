@@ -1,7 +1,7 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
 
-import com.tradevalidatior.validator.CurrencyHolidayService;
+import com.tradevalidator.validator.CurrencyHolidayService;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;

@@ -1,4 +1,4 @@
-package com.tradevalidatior.validator;
+package com.tradevalidator.validator;
 
 import java.util.Currency;
 import java.util.Date;

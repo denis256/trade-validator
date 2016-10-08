@@ -1,8 +1,9 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.ZoneId;
@@ -15,6 +16,7 @@ import static com.tradevalidator.model.ValidationResult.validationResult;
 /**
  *  Validator which checks business rule: value date cannot fall on weekend
  */
+@Component
 public class ValueDateWeekendValidator implements TradeValidator{
 
     private Set<DayOfWeek> weekendDays = new HashSet<>();

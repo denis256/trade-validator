@@ -1,10 +1,11 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * Unlike a spot contract, a forward contract is a contract that involves an agreement of
  * contract terms on the current date with the delivery and payment at a specified future date.
  */
+@Component
 public class SportForwardValidator  implements TradeValidator {
 
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");

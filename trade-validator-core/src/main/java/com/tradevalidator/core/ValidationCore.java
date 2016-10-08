@@ -1,12 +1,13 @@
-package com.tradevalidatior.core;
+package com.tradevalidator.core;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * Service which runs validation against trades
  */
+@Service
 public class ValidationCore {
 
     private static Logger LOG = LoggerFactory.getLogger(ValidationCore.class);
@@ -25,7 +27,6 @@ public class ValidationCore {
     private AtomicBoolean shutdown = new AtomicBoolean(false);
 
     public ValidationCore() {
-        tradeValidators = new ArrayList<>();
     }
 
     /**
@@ -45,8 +46,10 @@ public class ValidationCore {
                 .collect(Collectors.toList());
     }
 
+    @Autowired
     public ValidationCore withValidators(Collection<TradeValidator> tradeValidators) {
-        this.tradeValidators.addAll(tradeValidators);
+        LOG.info("Setting core validators with {}", tradeValidators);
+        this.tradeValidators = tradeValidators;
         return this;
     }
 

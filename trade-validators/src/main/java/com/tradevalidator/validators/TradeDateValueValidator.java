@@ -1,10 +1,11 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import static com.tradevalidator.model.ValidationResult.validationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
@@ -12,6 +13,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 /**
  * Validator which checks business rule:"value date cannot be before trade date"
  */
+@Component
 public class TradeDateValueValidator implements TradeValidator{
 
     private static Logger LOG = LoggerFactory.getLogger(TradeDateValueValidator.class);

@@ -1,4 +1,4 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
 
 import com.tradevalidator.model.Trade;
@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static com.tradevalidator.model.Trade.newTrade;
 import static org.hamcrest.CoreMatchers.is;

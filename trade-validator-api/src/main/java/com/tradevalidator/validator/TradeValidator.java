@@ -1,4 +1,4 @@
-package com.tradevalidatior.validator;
+package com.tradevalidator.validator;
 
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;

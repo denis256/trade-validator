@@ -1,8 +1,9 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
  - American option style will have in addition the excerciseStartDate, which has to be after the trade date but before the expiry date
  - expiry date and premium date shall be before delivery date
  */
+@Component
 public class OptionTypeValidator implements TradeValidator {
 
     private Set<String> optionType = new HashSet<>();

@@ -1,13 +1,14 @@
-package com.tradevalidatior.validators;
+package com.tradevalidator.validators;
 
-import com.tradevalidatior.validator.CurrencyHolidayService;
-import com.tradevalidatior.validator.TradeValidator;
+import com.tradevalidator.validator.CurrencyHolidayService;
+import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Currency;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.Set;
 /**
  * Currency pair validator, currency - holiday checker
  */
+@Component
 public class CurrencyValidator implements TradeValidator {
 
     private static Logger LOG = LoggerFactory.getLogger(CurrencyValidator.class);
