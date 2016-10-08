@@ -3,6 +3,8 @@ package com.tradevalidator.validators;
 import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 /**
  * Only one legal entity is used: CS Zurich
  */
+@ManagedResource(objectName = "TradeValidators:name=LegalEntityValidator", description = "Legal entity validation")
 @Component
 public class LegalEntityValidator implements TradeValidator {
 
@@ -33,5 +36,14 @@ public class LegalEntityValidator implements TradeValidator {
         }
 
         return validationResult;
+    }
+
+    @ManagedAttribute(description = "Get legal Entities")
+    public Set<String> getLegalEntities() {
+        return legalEntities;
+    }
+    @ManagedAttribute(description = "Set legal Entities")
+    public void setLegalEntities(Set<String> legalEntities) {
+        this.legalEntities = legalEntities;
     }
 }

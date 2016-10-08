@@ -6,6 +6,9 @@ import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -29,6 +32,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * contract terms on the current date with the delivery and payment at a specified future date.
  */
 @Component
+@ManagedResource(objectName = "TradeValidators:name=SpotForwardValidator", description = "SpotForward validator")
 public class SpotForwardValidator implements TradeValidator {
 
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,5 +126,16 @@ public class SpotForwardValidator implements TradeValidator {
 
     public void setTodayDate(Date todayDate) {
         this.todayDate = todayDate;
+    }
+
+    @ManagedAttribute(description = "Set today date, format yyyy-MM-dd")
+    @Value("${validator.todaydate}")
+    public void setTodayDateString(String todayDateString) throws ParseException {
+        todayDate = DATE_FORMATTER.parse(todayDateString);
+    }
+
+    @ManagedAttribute(description = "Get today date")
+    public String getTodayDateString() {
+        return DATE_FORMATTER.format(todayDate);
     }
 }
