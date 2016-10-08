@@ -30,8 +30,8 @@ public class OptionTypeValidator implements TradeValidator {
     public OptionTypeValidator() {
         optionType.add("VanillaOption");
 
-        europeanStyles.add("AMERICAN");
-        americanStyles.add("EUROPEAN");
+        europeanStyles.add("EUROPEAN");
+        americanStyles.add("AMERICAN");
     }
 
 
@@ -44,7 +44,7 @@ public class OptionTypeValidator implements TradeValidator {
                 .filter( type -> StringUtils.equalsIgnoreCase(type, trade.getType()) )
                 .findFirst().isPresent()) {
 
-            if (Stream.concat(europeanStyles.stream(), americanStyles.stream())
+            if (!Stream.concat(europeanStyles.stream(), americanStyles.stream())
                     .filter(style -> StringUtils.equalsIgnoreCase(style, trade.getStyle()))
                     .findFirst()
                     .isPresent()) { //the style can be either American or European

@@ -2,6 +2,7 @@ package com.tradevalidator.validators;
 
 
 import com.tradevalidator.model.Trade;
+import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Stream;
 
 import static com.tradevalidator.model.Trade.newTrade;
 import static org.hamcrest.CoreMatchers.is;
@@ -24,17 +26,20 @@ public class OptionTypeValidatorTest {
 
 
     private Trade trade;
+    private Stream<String> types;
     private OptionTypeValidator optionTypeValidator = new OptionTypeValidator();
+
 
     @Before
     public void before() {
         trade = newTrade();
+        trade.setType("VanillaOption");
+        types = Stream.of("EUROPEAN", "American");
     }
 
     @Test
     public void test_OptionType_European_positivePath() throws ParseException {
-
-        trade.setStyle("European");
+        trade.setStyle("EUROPEAN");
 
         trade.setDeliveryDate(dateFormatter.parse("2016-10-08"));
         trade.setExpiryDate(dateFormatter.parse("2016-10-01"));
@@ -49,7 +54,7 @@ public class OptionTypeValidatorTest {
 
     @Test
     public void test_OptionType_American_positivePath() throws ParseException {
-        trade.setStyle("American");
+        trade.setStyle("AMERICAN");
 
         trade.setDeliveryDate(dateFormatter.parse("2016-10-08"));
         trade.setExpiryDate(dateFormatter.parse("2016-10-03"));
@@ -63,5 +68,19 @@ public class OptionTypeValidatorTest {
         assertThat(result.errors(), is(empty()));
     }
 
+    @Test
+    public void test_OptionType_Unknown_Style() throws ParseException {
+        trade.setStyle("Potato style");
+
+        ValidationResult result = optionTypeValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.hasErrors(), is(true));
+        assertThat(result.errors().size(), is(1));
+
+        ValidationError firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("style"));
+        assertThat(firstError.message(), is("Option style is not valid"));
+    }
 
 }
