@@ -2,6 +2,7 @@ package com.tradevalidator.rest;
 
 import com.tradevalidator.core.ValidationCore;
 import com.tradevalidator.model.Trade;
+import com.tradevalidator.model.TradeValidationResult;
 import com.tradevalidator.model.ValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class ValidationController {
     private ValidationCore validationCore;
 
     @PostMapping("validate")
-    public List<ValidationResult> validateTrade(@RequestBody Trade trade) {
+    public TradeValidationResult validateTrade(@RequestBody Trade trade) {
         return validationCore.validateTrade(trade);
     }
 

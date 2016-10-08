@@ -1,17 +1,17 @@
 package com.tradevalidator.core;
 
+import com.tradevalidator.model.TradeValidationResult;
 import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
-import com.tradevalidator.model.ValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
+
+import static com.tradevalidator.model.TradeValidationResult.tradeValidationResult;
 
 /**
  * Service which runs validation against trades
@@ -34,16 +34,21 @@ public class ValidationCore {
      * @param trade
      * @return
      */
-    public List<ValidationResult> validateTrade(Trade trade) {
+    public TradeValidationResult validateTrade(Trade trade) {
 
         if (shutdown.get()) {
             throw new ValidationCoreException("ValidationCore is shutting down");
         }
 
-        return tradeValidators.parallelStream()
-                .map( validator ->  validator.validate(trade))
-                .filter(validationResult -> validationResult.hasErrors())
-                .collect(Collectors.toList());
+
+        TradeValidationResult tradeValidationResult = tradeValidationResult().trade(trade);
+
+        tradeValidators.parallelStream()
+                .map( validator ->  validator.validate(trade))              // run validations
+                .filter(validationResult -> validationResult.hasErrors())  // get results with errors
+                .forEach(validationError -> validationError.errors().forEach(error -> tradeValidationResult.addInvalidField(error.field(), error.message())) ); // collect results
+
+        return tradeValidationResult;
     }
 
     @Autowired

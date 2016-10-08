@@ -1,6 +1,7 @@
 package com.tradevalidator.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -21,7 +22,7 @@ public class TradeValidationResult {
     public TradeValidationResult addInvalidField(String field, String message) {
 
         if (!invalidFields.containsKey(field)) {
-            invalidFields.put(field, new ConcurrentLinkedQueue<>());
+            invalidFields.put(field, ConcurrentHashMap.newKeySet());
         }
         invalidFields.get(field).add(message);
         return this;
@@ -42,5 +43,10 @@ public class TradeValidationResult {
 
     public void setInvalidFields(Map<String, Collection<String>> invalidFields) {
         this.invalidFields = invalidFields;
+    }
+
+    public TradeValidationResult trade(Trade trade) {
+        this.trade = trade;
+        return this;
     }
 }
