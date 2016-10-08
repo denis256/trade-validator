@@ -89,7 +89,7 @@ public class SpotForwardValidator implements TradeValidator {
         LocalDate todayDateLocalDate = todayDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if (DAYS.between(todayDateLocalDate, tradeLocalDate) <= 2) {
-            validationResult.withError(ValidationError.validationError().field("valueDate").message("On forward trades valueDate should be more than 2 days "));
+            validationResult.withError(ValidationError.validationError().field("valueDate").message("On forward trades valueDate should be more than 2 days"));
         }
 
         return validationResult;

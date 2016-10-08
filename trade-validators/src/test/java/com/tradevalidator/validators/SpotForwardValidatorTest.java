@@ -45,6 +45,23 @@ public class SpotForwardValidatorTest {
     }
 
     @Test
+    public void test_Spot_invalid_value_date_path() {
+        Date validSpotDate = DateUtils.addDays(spotForwardValidator.getTodayDate(), 1);
+        trade.setValueDate(validSpotDate);
+        trade.setType("Spot");
+
+        ValidationResult result = spotForwardValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.hasErrors(), is(true));
+        assertThat(result.errors().size(), is(1));
+
+        ValidationError firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("valueDate"));
+        assertThat(firstError.message(), is("On spot trades valueDate should be +2 days from today date"));
+    }
+
+    @Test
     public void test_Forward_postivie_path() {
 
         Date validForwardDate = DateUtils.addDays(spotForwardValidator.getTodayDate(), 5);
@@ -56,6 +73,26 @@ public class SpotForwardValidatorTest {
 
         assertThat(result, is(not(nullValue())));
         assertThat(result.errors(), is(empty()));
+
+    }
+
+    @Test
+    public void test_Forward_invalid_value_date_path() {
+
+        Date validForwardDate = DateUtils.addDays(spotForwardValidator.getTodayDate(), 2);
+        trade.setValueDate(validForwardDate);
+        trade.setType("Forward");
+
+
+        ValidationResult result = spotForwardValidator.validate(trade);
+
+        assertThat(result, is(not(nullValue())));
+        assertThat(result.hasErrors(), is(true));
+        assertThat(result.errors().size(), is(1));
+
+        ValidationError firstError = result.errors().stream().findFirst().get();
+        assertThat(firstError.field(), is("valueDate"));
+        assertThat(firstError.message(), is("On forward trades valueDate should be more than 2 days"));
 
     }
 
