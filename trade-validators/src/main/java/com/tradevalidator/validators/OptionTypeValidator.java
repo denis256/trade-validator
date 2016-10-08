@@ -106,6 +106,6 @@ public class OptionTypeValidator implements TradeValidator {
 
         }
 
-        return validationResult();
+        return validationResult;
     }
 }
