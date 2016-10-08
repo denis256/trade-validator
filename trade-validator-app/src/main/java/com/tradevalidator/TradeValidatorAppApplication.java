@@ -4,6 +4,8 @@ import ch.qos.logback.classic.ViewStatusMessagesServlet;
 import com.tradevalidator.validator.CurrencyHolidayService;
 import org.jminix.console.servlet.MiniConsoleServlet;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +16,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.text.SimpleDateFormat;
-import java.util.Currency;
-import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
 
 @SpringBootApplication
 @ComponentScan("com.tradevalidator")
@@ -48,5 +47,4 @@ public class TradeValidatorAppApplication implements ServletContextInitializer {
 				;
 
 	}
-
 }
