@@ -4,6 +4,8 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -21,6 +23,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
  - expiry date and premium date shall be before delivery date
  */
 @Component
+@ManagedResource(objectName = "TradeValidators:name=OptionTypeValidator", description = "Option validator service")
 public class OptionTypeValidator implements TradeValidator {
 
     private Set<String> optionType = new HashSet<>();
@@ -107,5 +110,35 @@ public class OptionTypeValidator implements TradeValidator {
         }
 
         return validationResult;
+    }
+
+    @ManagedAttribute(description = "Get option type")
+    public Set<String> getOptionType() {
+        return optionType;
+    }
+
+    @ManagedAttribute(description = "Set option type")
+    public void setOptionType(Set<String> optionType) {
+        this.optionType = optionType;
+    }
+
+    @ManagedAttribute(description = "Get european styles")
+    public Set<String> getEuropeanStyles() {
+        return europeanStyles;
+    }
+
+    @ManagedAttribute(description = "Set european styles")
+    public void setEuropeanStyles(Set<String> europeanStyles) {
+        this.europeanStyles = europeanStyles;
+    }
+
+    @ManagedAttribute(description = "Get american styles")
+    public Set<String> getAmericanStyles() {
+        return americanStyles;
+    }
+
+    @ManagedAttribute(description = "Set american styles")
+    public void setAmericanStyles(Set<String> americanStyles) {
+        this.americanStyles = americanStyles;
     }
 }

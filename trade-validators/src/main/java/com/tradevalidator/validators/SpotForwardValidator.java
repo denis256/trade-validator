@@ -104,18 +104,22 @@ public class SpotForwardValidator implements TradeValidator {
         return validationResult;
     }
 
+    @ManagedAttribute(description = "Get spot types")
     public Set<String> getSpotTypes() {
         return spotTypes;
     }
 
+    @ManagedAttribute(description = "Set spot types")
     public void setSpotTypes(Set<String> spotTypes) {
         this.spotTypes = spotTypes;
     }
 
+    @ManagedAttribute(description = "Get forward types")
     public Set<String> getForwardTypes() {
         return forwardTypes;
     }
 
+    @ManagedAttribute(description = "Set forward types")
     public void setForwardTypes(Set<String> forwardTypes) {
         this.forwardTypes = forwardTypes;
     }
