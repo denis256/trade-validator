@@ -4,6 +4,7 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @Component
 public class CustomerValidator implements TradeValidator {
 
+    @Value("validator.customers.validcustomers")
     private Set<String> validCustomers = new HashSet<>();
 
     public CustomerValidator() {
@@ -40,5 +42,13 @@ public class CustomerValidator implements TradeValidator {
         }
 
         return validationResult;
+    }
+
+    public Set<String> getValidCustomers() {
+        return validCustomers;
+    }
+
+    public void setValidCustomers(Set<String> validCustomers) {
+        this.validCustomers = validCustomers;
     }
 }
