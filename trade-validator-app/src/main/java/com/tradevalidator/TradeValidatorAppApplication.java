@@ -12,6 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,6 +26,7 @@ import java.util.Optional;
 @SpringBootApplication
 @ComponentScan("com.tradevalidator")
 @Configuration
+@EnableSwagger2
 public class TradeValidatorAppApplication implements ServletContextInitializer {
 
 	public static void main(String[] args) {
@@ -46,5 +52,14 @@ public class TradeValidatorAppApplication implements ServletContextInitializer {
 				.failOnEmptyBeans(false)
 				;
 
+	}
+
+	@Bean
+	public Docket apiDocs() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any())
+				.build();
 	}
 }

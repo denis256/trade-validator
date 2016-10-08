@@ -15,3 +15,13 @@ curl http://localhost:8080/api/shutdown
 curl -X POST http://localhost:8080/api/shutdown
 
 curl -v http://localhost:8080/info
+
+http://localhost:8080/metrics
+
+API documentation
+=================
+
+http://localhost:8080/swagger-ui.html
+
+
+http://localhost:8080/swagger-ui.html#/validation-controller
