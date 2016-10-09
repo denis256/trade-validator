@@ -6,21 +6,16 @@ import com.tradevalidator.model.TradeValidationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -66,6 +61,36 @@ public class TradeValidatorIntegrationTests {
 		assertThat(tradeValidationResult.getInvalidFields().size(), is(1));
 		assertThat(tradeValidationResult.getInvalidFields().get("valueDate"), is(not(nullValue())));
 
+	}
+
+	@Test
+	public void testBulkTradesValidation() throws IOException {
+		InputStream tradeFile = getClass().getResourceAsStream("/bulk_trades.json");
+		ListOfTrades trades = objectMapper.readValue(tradeFile, ListOfTrades.class);
+
+		ListOfValidationResults tradeValidationResults = restTemplate.postForObject("/api/validateBulk", trades, ListOfValidationResults.class);
+		assertThat(tradeValidationResults, is(not(nullValue())));
+
+		tradeValidationResults.forEach( result -> {
+			assertThat(result, is(not(nullValue())));
+			assertThat(result.getTrade(), is(notNullValue()));
+			if (result.haveErrors()) {
+				assertThat(result.getInvalidFields(), is(not(nullValue())));
+				assertThat(result.getInvalidFields().isEmpty(), is(false));
+			}
+		});
+	}
+
+
+	// wrapper class for list of trades
+	public static class ListOfTrades extends ArrayList<Trade> {
+
+		public ListOfTrades() {}
+
+	}
+
+	public static class ListOfValidationResults extends ArrayList<TradeValidationResult> {
+		public ListOfValidationResults() {}
 	}
 
 }

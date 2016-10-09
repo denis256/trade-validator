@@ -25,7 +25,7 @@ public class ValidationCore {
 
     private Collection<TradeValidator> tradeValidators;
 
-    private AtomicBoolean shutdown = new AtomicBoolean(false);
+    private volatile AtomicBoolean shutdown = new AtomicBoolean(false);
 
     public ValidationCore() {
     }
