@@ -44,6 +44,10 @@ public class TradeValidatorIntegrationTests {
 		String trueResponseCheck = restTemplate.getForObject("/api/shutdown", String.class);
 		assertThat(trueResponseCheck, is("true"));
 
+		restTemplate.delete("/api/shutdown", String.class);
+
+		String falseAfterCancelResponse = restTemplate.getForObject("/api/shutdown", String.class);
+		assertThat(falseAfterCancelResponse, is("false"));
 	}
 
 	@Test
