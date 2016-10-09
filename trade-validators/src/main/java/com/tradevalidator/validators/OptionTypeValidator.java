@@ -5,10 +5,10 @@ import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -121,7 +121,6 @@ public class OptionTypeValidator implements TradeValidator {
         return optionType;
     }
 
-    @ManagedAttribute(description = "Set option type")
     public void setOptionType(Set<String> optionType) {
         this.optionType = optionType;
     }
@@ -131,7 +130,6 @@ public class OptionTypeValidator implements TradeValidator {
         return europeanStyles;
     }
 
-    @ManagedAttribute(description = "Set european styles")
     public void setEuropeanStyles(Set<String> europeanStyles) {
         this.europeanStyles = europeanStyles;
     }
@@ -141,8 +139,35 @@ public class OptionTypeValidator implements TradeValidator {
         return americanStyles;
     }
 
-    @ManagedAttribute(description = "Set american styles")
     public void setAmericanStyles(Set<String> americanStyles) {
         this.americanStyles = americanStyles;
+    }
+
+
+    @ManagedOperation(description = "Load valid optionType")
+    @ManagedOperationParameters(
+            @ManagedOperationParameter(name = "value", description = "Comma separated list")
+    )
+    public String loadValidOptionTypes(String value) {
+        optionType = new HashSet<>(Arrays.asList(value.split(",")));
+        return optionType.toString();
+    }
+
+    @ManagedOperation(description = "Load valid europeanStyles")
+    @ManagedOperationParameters(
+            @ManagedOperationParameter(name = "value", description = "Comma separated list")
+    )
+    public String loadValidEuropeanStyles(String value) {
+        europeanStyles = new HashSet<>(Arrays.asList(value.split(",")));
+        return europeanStyles.toString();
+    }
+
+    @ManagedOperation(description = "Load valid americanStyles")
+    @ManagedOperationParameters(
+            @ManagedOperationParameter(name = "value", description = "Comma separated list")
+    )
+    public String loadValidAmericanStyles(String value) {
+        americanStyles = new HashSet<>(Arrays.asList(value.split(",")));
+        return americanStyles.toString();
     }
 }

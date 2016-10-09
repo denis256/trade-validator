@@ -7,8 +7,7 @@ import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -111,7 +110,6 @@ public class SpotForwardValidator implements TradeValidator {
         return spotTypes;
     }
 
-    @ManagedAttribute(description = "Set spot types")
     public void setSpotTypes(Set<String> spotTypes) {
         this.spotTypes = spotTypes;
     }
@@ -121,7 +119,6 @@ public class SpotForwardValidator implements TradeValidator {
         return forwardTypes;
     }
 
-    @ManagedAttribute(description = "Set forward types")
     public void setForwardTypes(Set<String> forwardTypes) {
         this.forwardTypes = forwardTypes;
     }
@@ -143,5 +140,23 @@ public class SpotForwardValidator implements TradeValidator {
     @ManagedAttribute(description = "Get today date")
     public String getTodayDateString() {
         return DATE_FORMATTER.format(todayDate);
+    }
+
+    @ManagedOperation(description = "Load valid spotTypes")
+    @ManagedOperationParameters(
+            @ManagedOperationParameter(name = "value", description = "Comma separated list")
+    )
+    public String loadValidSpotTypes(String value) {
+        spotTypes = new HashSet<>(Arrays.asList(value.split(",")));
+        return spotTypes.toString();
+    }
+
+    @ManagedOperation(description = "Load valid forwardTypes")
+    @ManagedOperationParameters(
+            @ManagedOperationParameter(name = "value", description = "Comma separated list")
+    )
+    public String loadValidForwardTypes(String value) {
+        forwardTypes = new HashSet<>(Arrays.asList(value.split(",")));
+        return forwardTypes.toString();
     }
 }

@@ -1,19 +1,19 @@
 package com.tradevalidator.validators;
 
-import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import com.tradevalidator.validator.TradeValidator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.tradevalidator.model.ValidationResult.validationResult;
 import static com.tradevalidator.model.ValidationError.validationError;
+import static com.tradevalidator.model.ValidationResult.validationResult;
 
 /**
  * Validator for business rule : "the counterparty is one of the supported ones"
@@ -47,12 +47,20 @@ public class CustomerValidator implements TradeValidator {
         return validationResult;
     }
 
-    @ManagedAttribute(description = "Get valid customers")
+    @ManagedAttribute(description = "List valid customers")
     public Set<String> getValidCustomers() {
         return validCustomers;
     }
 
-    @ManagedAttribute(description = "Set valid customers")
+    @ManagedOperation(description = "Load valid customers")
+    @ManagedOperationParameters(
+        @ManagedOperationParameter(name = "customerList", description = "Comma separated customer list")
+    )
+    public String validCustomersFromString(String customerList) {
+        validCustomers = new HashSet<>(Arrays.asList(customerList.split(",")));
+        return validCustomers.toString();
+    }
+
     public void setValidCustomers(Set<String> validCustomers) {
         this.validCustomers = validCustomers;
     }
