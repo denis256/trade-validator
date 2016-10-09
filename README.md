@@ -32,7 +32,8 @@ API endpoints
 
 `/api/validateBulk` - bulk validate of a trade list, as result is returned list of trades and each trade have list of errors
 
-`/api/shutdown` - shutdown endpoint, `GET` request to fetch status, `POST` to shutdown service. Shutdown status is also available through default `/info` endpoint. When shutdown status is set, service no more accept trades for validation.
+`/api/shutdown` - shutdown endpoint, `GET` request to fetch status, `POST` to shutdown service. Shutdown can be canceled by sending `DELETE` on shutdown API.
+Shutdown status is also available through default `/info` endpoint. When shutdown status is set, service no more accept trades for validation.
 
 `/metrics` - fetch  application metrics 
 
