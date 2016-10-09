@@ -4,6 +4,7 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
@@ -26,8 +27,11 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @ManagedResource(objectName = "TradeValidators:name=OptionTypeValidator", description = "Option validator service")
 public class OptionTypeValidator implements TradeValidator {
 
+    @Value("${validator.options.optionType}")
     private Set<String> optionType = new HashSet<>();
+    @Value("${validator.options.europeanStyles}")
     private Set<String> europeanStyles = new HashSet<>();
+    @Value("${validator.options.americanStyles}")
     private Set<String> americanStyles = new HashSet<>();
 
     public OptionTypeValidator() {

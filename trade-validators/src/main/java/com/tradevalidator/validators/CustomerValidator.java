@@ -22,7 +22,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @ManagedResource(objectName = "TradeValidators:name=CustomerValidator", description = "Legal entity validation")
 public class CustomerValidator implements TradeValidator {
 
-    @Value("${validator.customers.validcustomers}")
+    @Value("${validator.customer.validCustomers}")
     private Set<String> validCustomers = new HashSet<>();
 
     public CustomerValidator() {

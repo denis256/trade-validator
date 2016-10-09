@@ -3,6 +3,7 @@ package com.tradevalidator.validators;
 import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @Component
 public class LegalEntityValidator implements TradeValidator {
 
+    @Value("${validator.legalEntities}")
     private Set<String> legalEntities = new HashSet<>();
 
     public LegalEntityValidator() {

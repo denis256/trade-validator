@@ -37,7 +37,9 @@ public class SpotForwardValidator implements TradeValidator {
 
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
+    @Value("${validator.soptforward.spotTypes}")
     private Set<String> spotTypes = new HashSet<>();
+    @Value("${validator.soptforward.forwardTypes}")
     private Set<String> forwardTypes = new HashSet<>();
     private Date todayDate;
 
@@ -133,7 +135,7 @@ public class SpotForwardValidator implements TradeValidator {
     }
 
     @ManagedAttribute(description = "Set today date, format yyyy-MM-dd")
-    @Value("${validator.todaydate}")
+    @Value("${validator.todayDate}") //inject value through setter
     public void setTodayDateString(String todayDateString) throws ParseException {
         todayDate = DATE_FORMATTER.parse(todayDateString);
     }
