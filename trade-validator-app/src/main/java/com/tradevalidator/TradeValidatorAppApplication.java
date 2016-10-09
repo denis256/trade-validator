@@ -20,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,13 +49,17 @@ public class TradeValidatorAppApplication implements ServletContextInitializer {
             Currency USD = Currency.getInstance("USD");
 
             if (USD.equals(currency)) {
-                return Optional.of(new HashSet<>(
-                		Arrays.asList(
-                				DATE_FORMATTER.parse("2017-01-01"),
-								DATE_FORMATTER.parse("2017-01-02"),
-								DATE_FORMATTER.parse("2017-02-20")
-						)));
-            }
+				try {
+					return Optional.of(new HashSet<>(
+                            Arrays.asList(
+                                    DATE_FORMATTER.parse("2017-01-01"),
+                                    DATE_FORMATTER.parse("2017-01-02"),
+                                    DATE_FORMATTER.parse("2017-02-20")
+                            )));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
 
 
             return Optional.empty();
