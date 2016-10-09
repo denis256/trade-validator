@@ -36,9 +36,9 @@ public class SpotForwardValidator implements TradeValidator {
 
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    @Value("${validator.soptforward.spotTypes}")
+
     private Set<String> spotTypes = new HashSet<>();
-    @Value("${validator.soptforward.forwardTypes}")
+
     private Set<String> forwardTypes = new HashSet<>();
     private Date todayDate;
 
@@ -146,6 +146,7 @@ public class SpotForwardValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.soptforward.spotTypes}")
     public String loadValidSpotTypes(String value) {
         spotTypes = new HashSet<>(Arrays.asList(value.split(",")));
         return spotTypes.toString();
@@ -155,6 +156,7 @@ public class SpotForwardValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.soptforward.forwardTypes}")
     public String loadValidForwardTypes(String value) {
         forwardTypes = new HashSet<>(Arrays.asList(value.split(",")));
         return forwardTypes.toString();

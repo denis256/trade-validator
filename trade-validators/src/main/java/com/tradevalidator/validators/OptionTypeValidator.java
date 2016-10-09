@@ -27,11 +27,11 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @ManagedResource(objectName = "TradeValidators:name=OptionTypeValidator", description = "Option validator service")
 public class OptionTypeValidator implements TradeValidator {
 
-    @Value("${validator.options.optionType}")
+
     private Set<String> optionType = new HashSet<>();
-    @Value("${validator.options.europeanStyles}")
+
     private Set<String> europeanStyles = new HashSet<>();
-    @Value("${validator.options.americanStyles}")
+
     private Set<String> americanStyles = new HashSet<>();
 
     public OptionTypeValidator() {
@@ -148,6 +148,7 @@ public class OptionTypeValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.options.optionType}")
     public String loadValidOptionTypes(String value) {
         optionType = new HashSet<>(Arrays.asList(value.split(",")));
         return optionType.toString();
@@ -157,6 +158,7 @@ public class OptionTypeValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.options.europeanStyles}")
     public String loadValidEuropeanStyles(String value) {
         europeanStyles = new HashSet<>(Arrays.asList(value.split(",")));
         return europeanStyles.toString();
@@ -166,6 +168,7 @@ public class OptionTypeValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.options.americanStyles}")
     public String loadValidAmericanStyles(String value) {
         americanStyles = new HashSet<>(Arrays.asList(value.split(",")));
         return americanStyles.toString();

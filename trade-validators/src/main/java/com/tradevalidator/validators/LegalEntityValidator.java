@@ -21,7 +21,6 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @Component
 public class LegalEntityValidator implements TradeValidator {
 
-    @Value("${validator.legalEntities}")
     private Set<String> legalEntities = new HashSet<>();
 
     public LegalEntityValidator() {
@@ -53,6 +52,7 @@ public class LegalEntityValidator implements TradeValidator {
     @ManagedOperationParameters(
             @ManagedOperationParameter(name = "value", description = "Comma separated list")
     )
+    @Value("${validator.legalEntities}")
     public String loadValidLegalEntities(String value) {
         legalEntities = new HashSet<>(Arrays.asList(value.split(",")));
         return legalEntities.toString();

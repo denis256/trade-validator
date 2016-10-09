@@ -37,6 +37,7 @@ public class CurrencyValidator implements TradeValidator {
 
         String ccyPair = trade.getCcyPair();
         if (StringUtils.isBlank(ccyPair)) {
+            LOG.warn("ccyPair is blank for trade {}", trade);
             return validationResult.withError(new ValidationError().field("ccyPair").message("ccyPair is blank"));
         }
 

@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.tradevalidator.model.ValidationError.validationError;
 import static com.tradevalidator.model.ValidationResult.validationResult;
@@ -22,8 +20,8 @@ import static com.tradevalidator.model.ValidationResult.validationResult;
 @ManagedResource(objectName = "TradeValidators:name=CustomerValidator", description = "Legal entity validation")
 public class CustomerValidator implements TradeValidator {
 
-    @Value("${validator.customer.validCustomers}")
-    private Set<String> validCustomers = new HashSet<>();
+
+    private List<String> validCustomers = new ArrayList<>();
 
     public CustomerValidator() {
         validCustomers.add("PLUTO1");
@@ -48,7 +46,7 @@ public class CustomerValidator implements TradeValidator {
     }
 
     @ManagedAttribute(description = "List valid customers")
-    public Set<String> getValidCustomers() {
+    public List<String> getValidCustomers() {
         return validCustomers;
     }
 
@@ -56,12 +54,13 @@ public class CustomerValidator implements TradeValidator {
     @ManagedOperationParameters(
         @ManagedOperationParameter(name = "customerList", description = "Comma separated customer list")
     )
+    @Value("${validator.customer.validCustomers}")
     public String validCustomersFromString(String customerList) {
-        validCustomers = new HashSet<>(Arrays.asList(customerList.split(",")));
+        validCustomers = new ArrayList<>(Arrays.asList(customerList.split(",")));
         return validCustomers.toString();
     }
 
-    public void setValidCustomers(Set<String> validCustomers) {
+    public void setValidCustomers(List<String> validCustomers) {
         this.validCustomers = validCustomers;
     }
 }
