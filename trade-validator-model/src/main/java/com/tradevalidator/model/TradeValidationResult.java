@@ -55,4 +55,8 @@ public class TradeValidationResult {
         this.trade = trade;
         return this;
     }
+
+    public Map<String, Collection<String>> invalidFields() {
+        return invalidFields;
+    }
 }
