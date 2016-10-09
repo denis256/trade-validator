@@ -20,6 +20,8 @@ public class TradeValidationResult {
         return  new TradeValidationResult();
     }
 
+    public TradeValidationResult() {}
+
     public TradeValidationResult addInvalidField(String field, String message) {
 
         if (!invalidFields.containsKey(field)) {
