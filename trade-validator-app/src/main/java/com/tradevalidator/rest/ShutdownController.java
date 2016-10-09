@@ -2,10 +2,7 @@ package com.tradevalidator.rest;
 
 import com.tradevalidator.core.ValidationCore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +19,12 @@ public class ShutdownController {
     @PostMapping("shutdown")
     public boolean shutdown() {
         validationCore.shutdown();
+        return validationCore.fetchShutdownStatus();
+    }
+
+    @DeleteMapping("shutdown")
+    public boolean cancelShutdown() {
+        validationCore.cancelShutdown();
         return validationCore.fetchShutdownStatus();
     }
 

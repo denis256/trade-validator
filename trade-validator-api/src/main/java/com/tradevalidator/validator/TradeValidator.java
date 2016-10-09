@@ -8,5 +8,10 @@ import com.tradevalidator.model.ValidationResult;
  */
 public interface TradeValidator {
 
+    /**
+     * Run trade validation checks and return results
+     * @param trade Trade to validate
+     * @return Validation errors is something found empty object otherwise
+     */
     ValidationResult validate(Trade trade);
 }
