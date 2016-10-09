@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.text.SimpleDateFormat;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootApplication
 @ComponentScan("com.tradevalidator")
@@ -42,7 +42,23 @@ public class TradeValidatorAppApplication implements ServletContextInitializer {
 	@Bean
 	public CurrencyHolidayService currencyHolidayService() {
 
-		return currency -> Optional.empty();
+		// service which return set of holidays for currencies, good point to extend and add querying of remote holidays rules repository
+		return currency -> {
+			SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+            Currency USD = Currency.getInstance("USD");
+
+            if (USD.equals(currency)) {
+                return Optional.of(new HashSet<>(
+                		Arrays.asList(
+                				DATE_FORMATTER.parse("2017-01-01"),
+								DATE_FORMATTER.parse("2017-01-02"),
+								DATE_FORMATTER.parse("2017-02-20")
+						)));
+            }
+
+
+            return Optional.empty();
+        };
 	}
 
 	@Bean
