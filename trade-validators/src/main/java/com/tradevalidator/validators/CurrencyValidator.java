@@ -42,6 +42,7 @@ public class CurrencyValidator implements TradeValidator {
         }
 
         if (StringUtils.length(ccyPair) != 6) { // ISO standard says that currency code have 3 chars, we have a pair, so should be 6...
+            LOG.warn("ccyPair length should be 6 for trade {}", trade);
             return validationResult.withError(new ValidationError().field("ccyPair").message("ccyPair length should be 6"));
         }
 
@@ -49,6 +50,7 @@ public class CurrencyValidator implements TradeValidator {
 
         if (trade.getValueDate() == null) {
             valueDateIsPresent = false;
+            LOG.warn("valueDate is missing for trade {}", trade);
             validationResult.withError(ValidationError.validationError().field("valueDate").message("valueDate is missing"));
         }
 
@@ -59,17 +61,21 @@ public class CurrencyValidator implements TradeValidator {
         try {
             Currency currency1 = Currency.getInstance(currency1Str);
             if (valueDateIsPresent && isDateHolidayCurrency(trade.getValueDate(), currency1)) {
+                LOG.warn("valueDate matches to holiday for Currency 1 for trade {}", trade);
                 validationResult.withError(new ValidationError().field("ccyPair").message("valueDate matches to holiday for Currency 1"));
             }
         }catch (IllegalArgumentException e) {
+            LOG.warn("Currency 1 is not valid for trade {}", trade);
             validationResult.withError(new ValidationError().field("ccyPair").message("Currency 1 is not valid"));
         }
         try {
             Currency currency2 = Currency.getInstance(currency2Str);
             if (valueDateIsPresent && isDateHolidayCurrency(trade.getValueDate(), currency2)) {
+                LOG.warn("valueDate matches to holiday for Currency 2 for trade {}", trade);
                 validationResult.withError(new ValidationError().field("ccyPair").message("valueDate matches to holiday for Currency 2"));
             }
         }catch (IllegalArgumentException e) {
+            LOG.warn("Currency 2 is not valid for trade {}", trade);
             validationResult.withError(new ValidationError().field("ccyPair").message("Currency 2 is not valid"));
         }
 

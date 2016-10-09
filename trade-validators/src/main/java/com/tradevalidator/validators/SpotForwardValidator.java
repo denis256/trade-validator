@@ -6,6 +6,8 @@ import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationError;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
@@ -33,7 +35,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Component
 @ManagedResource(objectName = "TradeValidators:name=SpotForwardValidator", description = "SpotForward validator")
 public class SpotForwardValidator implements TradeValidator {
-
+    private static Logger LOG = LoggerFactory.getLogger(SpotForwardValidator.class);
     private final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -60,6 +62,7 @@ public class SpotForwardValidator implements TradeValidator {
 
         if (trade.getValueDate() == null) {
             ValidationResult validationResult = new ValidationResult();
+            LOG.warn("valueDate is missing trade {}", trade);
             validationResult.withError(ValidationError.validationError().field("valueDate").message("valueDate is missing"));
             return validationResult;
         }
@@ -86,6 +89,7 @@ public class SpotForwardValidator implements TradeValidator {
         LocalDate todayDateLocalDate = todayDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if (DAYS.between(todayDateLocalDate, tradeLocalDate) != 2) {
+            LOG.warn("On spot trades valueDate should be +2 days from today date for trade {}", trade);
             validationResult.withError(ValidationError.validationError().field("valueDate").message("On spot trades valueDate should be +2 days from today date"));
         }
 
@@ -99,6 +103,7 @@ public class SpotForwardValidator implements TradeValidator {
         LocalDate todayDateLocalDate = todayDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if (DAYS.between(todayDateLocalDate, tradeLocalDate) <= 2) {
+            LOG.warn("On forward trades valueDate should be more than 2 days for trade {}", trade);
             validationResult.withError(ValidationError.validationError().field("valueDate").message("On forward trades valueDate should be more than 2 days"));
         }
 

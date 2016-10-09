@@ -4,6 +4,8 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,7 @@ import static com.tradevalidator.model.ValidationError.validationError;
 @ManagedResource(objectName = "TradeValidators:name=OptionTypeValidator", description = "Option validator service")
 public class OptionTypeValidator implements TradeValidator {
 
+    private static Logger LOG = LoggerFactory.getLogger(OptionTypeValidator.class);
 
     private Set<String> optionType = new HashSet<>();
 
@@ -55,6 +58,7 @@ public class OptionTypeValidator implements TradeValidator {
                     .filter(style -> StringUtils.equalsIgnoreCase(style, trade.getStyle()))
                     .findFirst()
                     .isPresent()) { //the style can be either American or European
+                LOG.warn("Option style is not valid for trade {}", trade);
                 validationResult.withError(validationError().field("style").message("Option style is not valid"));
                 return validationResult;
             }
@@ -65,22 +69,27 @@ public class OptionTypeValidator implements TradeValidator {
             if (trade.getDeliveryDate() != null) {
 
                 if (trade.getExpiryDate() == null) {
+                    LOG.warn("expiry date is missing for trade {}", trade);
                     validationResult.withError(validationError().field("expiryDate").message("expiry date is missing"));
                 } else {
                     if (!trade.getExpiryDate().before(trade.getDeliveryDate())) {
+                        LOG.warn("expiry date should be before delivery date for trade {}", trade);
                         validationResult.withError(validationError().field("expiryDate").message("expiry date should be before delivery date"));
                     }
                 }
 
                 // premium date check
                 if (trade.getPremiumDate() == null) {
+                    LOG.warn("premium date is missing for trade {}", trade);
                     validationResult.withError(validationError().field("premiumDate").message("premium date is missing"));
                 } else {
                     if (!trade.getPremiumDate().before(trade.getDeliveryDate())) {
+                        LOG.warn("premium date should be before delivery date for trade {}", trade);
                         validationResult.withError(validationError().field("premiumDate").message("premium date should be before delivery date"));
                     }
                 }
             } else {
+                LOG.warn("deliveryDate is missing for trade {}", trade);
                 validationResult.withError(validationError().field("deliveryDate").message("deliveryDate is missing"));
 
             }
@@ -88,22 +97,27 @@ public class OptionTypeValidator implements TradeValidator {
             if (americanStyles.contains(trade.getStyle())) { // American option style will have in addition the excerciseStartDate, which has to be after the trade date but before the expiry date
 
                 if (trade.getExcerciseStartDate() == null) {
+                    LOG.warn("excerciseStartDate is missing for trade {}", trade);
                     validationResult.withError(validationError().field("excerciseStartDate").message("excerciseStartDate is missing"));
                 } else {
 
                     if (trade.getTradeDate() != null) {
                         if (!trade.getExcerciseStartDate().after(trade.getTradeDate())) { // trade date check
+                            LOG.warn("excerciseStartDate should be after trade date for trade {}", trade);
                             validationResult.withError(validationError().field("excerciseStartDate").message("excerciseStartDate should be after trade date"));
                         }
                     } else {
+                        LOG.warn("tradeDate is missing for trade {}", trade);
                         validationResult.withError(validationError().field("tradeDate").message("tradeDate is missing"));
                     }
 
                     if (trade.getExpiryDate() != null) {
                         if (!trade.getExcerciseStartDate().before(trade.getExpiryDate())) { // expiry date check
+                            LOG.warn("excerciseStartDate should be before trade date for trade {}", trade);
                             validationResult.withError(validationError().field("excerciseStartDate").message("excerciseStartDate should be before trade date"));
                         }
                     } else {
+                        LOG.warn("expiryDate is missing for trade {}", trade);
                         validationResult.withError(validationError().field("expiryDate").message("expiryDate is missing"));
                     }
                 }

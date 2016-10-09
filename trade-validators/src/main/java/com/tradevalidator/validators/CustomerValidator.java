@@ -4,6 +4,8 @@ import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import com.tradevalidator.validator.TradeValidator;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.*;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import static com.tradevalidator.model.ValidationResult.validationResult;
 @Component
 @ManagedResource(objectName = "TradeValidators:name=CustomerValidator", description = "Legal entity validation")
 public class CustomerValidator implements TradeValidator {
+    private static Logger LOG = LoggerFactory.getLogger(CustomerValidator.class);
 
 
     private List<String> validCustomers = new ArrayList<>();
@@ -34,11 +37,13 @@ public class CustomerValidator implements TradeValidator {
         ValidationResult validationResult = validationResult();
 
         if (StringUtils.isBlank(trade.getCustomer())) {
+            LOG.warn("Customer blank for trade {}", trade);
             validationResult.withError(validationError().field("customer").message("Customer blank"));
             return validationResult;
         }
 
         if (!validCustomers.contains(trade.getCustomer())) {
+            LOG.warn("Customer is not in approved list for trade {}", trade);
             validationResult.withError(validationError().field("customer").message("Customer is not in approved list"));
         }
 

@@ -4,6 +4,8 @@ import com.tradevalidator.validator.TradeValidator;
 import com.tradevalidator.model.Trade;
 import com.tradevalidator.model.ValidationResult;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ import static com.tradevalidator.model.ValidationResult.validationResult;
 @Component
 @ManagedResource(objectName = "TradeValidators:name=ValueDateWeekendValidator", description = "Tunes on value date weekend validator")
 public class ValueDateWeekendValidator implements TradeValidator{
+    private static Logger LOG = LoggerFactory.getLogger(TradeDateValueValidator.class);
 
     private Set<DayOfWeek> weekendDays = new HashSet<>();
 
@@ -36,6 +39,7 @@ public class ValueDateWeekendValidator implements TradeValidator{
         ValidationResult validationResult = validationResult();
 
         if (trade.getValueDate() == null) {
+            LOG.warn("valueDate is missing for trade {}", trade);
             validationResult.withError(
                     validationError().field("valueDate").message("valueDate is missing")
             );
@@ -47,6 +51,7 @@ public class ValueDateWeekendValidator implements TradeValidator{
         );
 
         if (isWeekendDay) {
+            LOG.warn("valueDate is holiday date for trade {}", trade);
             validationResult.withError(
                     validationError().field("valueDate").message("valueDate is holiday date")
             );
