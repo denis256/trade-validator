@@ -73,8 +73,6 @@ Response
 * Connection #0 to host localhost left intact
 {"trade":{"tradeDate":"2016-08-11","valueDate":"2016-08-15","customer":"PLUTO1","ccyPair":"EURUSD","type":"Spot","style":null,"excerciseStartDate":null,"expiryDate":null,"premiumDate":null,"deliveryDate":null,"legalEntity":"CS Zurich"},"invalidFields":{"valueDate":["On spot trades valueDate should be +2 days from today date"]},"haveErrors":true}
 ```
-
-
 **Bulk trades validation**
 
 Request 
@@ -84,7 +82,7 @@ Request
 Response
 
 ```
-binary256@binary256-host /r/p/u/p/j/n/trade-validator> curl -v   -H "Content-Type: application/json"   -X POST --data "@./raw_trades/bulk_trades.json" localhost:8080/api/validateBulk
+curl -v   -H "Content-Type: application/json"   -X POST --data "@./raw_trades/bulk_trades.json" localhost:8080/api/validateBulk
 * Hostname was NOT found in DNS cache
 *   Trying 127.0.0.1...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
